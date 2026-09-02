@@ -43,13 +43,13 @@ define('DB_PASS', ''); // XAMPP/WAMP default is usually empty
 ### 5. Access the Website
 
 ```
-http://localhost/watch-collection/
+http://localhost/watch-collaction/
 ```
 
 Admin panel:
 
 ```
-http://localhost/watch-collection/admin/
+http://localhost/watch-collaction/admin/
 ```
 
 ## Notes
