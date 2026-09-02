@@ -57,44 +57,134 @@ require_once __DIR__ . '/includes/navbar.php';
 ?>
 
 <style>
-    /* ---------- Hero ---------- */
+    /* ---------- Hero: Diagonal Split ---------- */
     .hero {
-        background-color: #FFFFFF;
-        padding: 80px 0;
+        position: relative;
+        min-height: 560px;
+        display: flex;
+        overflow: hidden;
+        background-color: var(--color-primary);
     }
 
-    .hero__inner {
+    .hero__panel-text {
+        position: relative;
+        z-index: 2;
+        flex: 1 1 55%;
         display: flex;
         align-items: center;
-        gap: 48px;
-        flex-wrap: wrap;
+        padding: 40px 5% 40px 8%;
+        clip-path: polygon(0 0, 100% 0, 82% 100%, 0 100%);
+        background-color: var(--color-primary);
+    }
+
+    .hero__panel-image {
+        flex: 1 1 45%;
+        position: relative;
+        margin-left: -12%;
+        background-color: var(--color-primary);
+        overflow: hidden;
+    }
+
+    .hero__panel-image img {
+        width: 100%;
+        height: 100%;
+        min-height: 560px;
+        object-fit: cover;
+        display: block;
+        animation: heroFloat 4s ease-in-out infinite;
+    }
+
+    @keyframes heroFloat {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-16px); }
+    }
+
+    @media (max-width: 1023px) {
+        .hero__panel-image img {
+            animation: heroFloat 4s ease-in-out infinite;
+        }
     }
 
     .hero__content {
-        flex: 1 1 420px;
+        max-width: 460px;
+        opacity: 0;
+        transform: translateY(24px);
+        animation: heroFadeUp 0.7s ease forwards;
     }
 
     .hero__content h1 {
+        color: #FFFFFF;
         font-size: 2.75rem;
         line-height: 1.2;
         margin-bottom: 20px;
+        animation: heroFadeUp 0.7s ease forwards;
+        animation-delay: 0.1s;
+        opacity: 0;
+        transform: translateY(24px);
     }
 
     .hero__content p {
-        color: var(--color-text-secondary);
+        color: rgba(255, 255, 255, 0.85);
         font-size: 1.05rem;
         margin-bottom: 28px;
-        max-width: 480px;
+        max-width: 420px;
+        animation: heroFadeUp 0.7s ease forwards;
+        animation-delay: 0.25s;
+        opacity: 0;
+        transform: translateY(24px);
     }
 
-    .hero__image {
-        flex: 1 1 380px;
-        text-align: center;
+    .hero__content .btn {
+        animation: heroFadeUp 0.7s ease forwards;
+        animation-delay: 0.4s;
+        opacity: 0;
+        transform: translateY(24px);
     }
 
-    .hero__image img {
-        max-width: 100%;
-        border-radius: var(--radius);
+    @keyframes heroFadeUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media (max-width: 1023px) {
+        .hero {
+            flex-direction: column;
+            min-height: auto;
+        }
+
+        .hero__panel-text {
+            clip-path: none;
+            flex: none;
+            padding: 60px 24px 40px;
+            text-align: center;
+        }
+
+        .hero__content {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .hero__content p {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero__panel-image {
+            flex: none;
+            margin-left: 0;
+        }
+
+        .hero__panel-image img {
+            min-height: 280px;
+        }
+    }
+
+    @media (max-width: 639px) {
+        .hero__content h1 {
+            font-size: 2.1rem;
+        }
     }
 
     /* ---------- Section shared ---------- */
@@ -257,21 +347,20 @@ require_once __DIR__ . '/includes/navbar.php';
 
     @media (max-width: 639px) {
         .category-grid { grid-template-columns: 1fr; }
-        .hero__content h1 { font-size: 2.1rem; }
     }
 </style>
 
 <!-- Hero -->
 <section class="hero">
-    <div class="container hero__inner">
+    <div class="hero__panel-text">
         <div class="hero__content">
             <h1>Timeless Watches,<br>Modern Style</h1>
             <p>Discover a curated collection of premium watches — from classic elegance to modern sport designs, built for every occasion.</p>
             <a href="<?= base_url('browse-watches.php') ?>" class="btn btn-primary">Browse Watches</a>
         </div>
-        <div class="hero__image">
-            <img src="<?= base_url('assets/images/banners/hero-watch-1.jpg') ?>" alt="Featured Watch" onerror="this.style.display='none'">
-        </div>
+    </div>
+    <div class="hero__panel-image">
+        <img src="<?= base_url('assets/images/banners/hero-watch-1.jpg') ?>" alt="Featured Watch" onerror="this.style.display='none'">
     </div>
 </section>
 
@@ -291,7 +380,7 @@ require_once __DIR__ . '/includes/navbar.php';
                     <div class="product-card">
                         <div class="product-card__image">
                             <?php if (!empty($watch['image'])): ?>
-                                <img src="<?= base_url('uploads/watches/' . htmlspecialchars($watch['image'], ENT_QUOTES, 'UTF-8')) ?>" alt="<?= htmlspecialchars($watch['name'], ENT_QUOTES, 'UTF-8') ?>">
+                                <img src="<?= base_url('assets/uploads/watches/' . htmlspecialchars($watch['image'], ENT_QUOTES, 'UTF-8')) ?>" alt="<?= htmlspecialchars($watch['name'], ENT_QUOTES, 'UTF-8') ?>">
                             <?php endif; ?>
                         </div>
                         <div class="product-card__body">

@@ -100,7 +100,7 @@ require_once __DIR__ . '/includes/navbar.php';
     }
 
     .filters__field {
-        flex: 1 1 200px;
+        flex: 1 1 70px;
         margin-bottom: 0;
     }
 
@@ -109,6 +109,14 @@ require_once __DIR__ . '/includes/navbar.php';
         margin-bottom: 4px;
     }
 
+    .filters__field input,
+    .filters__field select {
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .filters .form-group {
+        margin-bottom: 0;
+    }
     .filters__actions {
         display: flex;
         gap: 10px;

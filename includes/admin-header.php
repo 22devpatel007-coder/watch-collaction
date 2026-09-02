@@ -30,7 +30,7 @@
     <span class="admin-topbar__brand"><?= SITE_NAME ?> Admin</span>
     <span class="admin-topbar__user">
         <?= htmlspecialchars($_SESSION['admin_name'] ?? 'Admin', ENT_QUOTES, 'UTF-8') ?>
-        | <a href="<?= base_url('admin/logout.php') ?>">Logout</a>
+        <!-- | <a href="<?= base_url('admin/logout.php') ?>">Logout</a> -->
     </span>
 </header>
 

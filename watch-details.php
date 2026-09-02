@@ -99,6 +99,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['buy_now'])) {
 
     redirect('user/checkout.php');
 }
+// Handle Review Submission (logged-in users only, one review per user per watch)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_review'])) {
+    if (!is_logged_in()) {
+        redirect('login.php');
+    }
+
+    if (!csrf_verify($_POST['csrf_token'] ?? '')) {
+        set_flash('error', 'Invalid request. Please try again.');
+        redirect('watch-details.php?id=' . $watch_id);
+    }
+
+    $user_id = $_SESSION['user_id'];
+    $rating  = filter_input(INPUT_POST, 'rating', FILTER_VALIDATE_INT);
+    $review_text = trim($_POST['review'] ?? '');
+
+    if (!$rating || $rating < 1 || $rating > 5 || $review_text === '') {
+        set_flash('error', 'Please provide a rating (1-5) and a review.');
+        redirect('watch-details.php?id=' . $watch_id);
+    }
+
+    $dupe = $pdo->prepare("SELECT id FROM reviews WHERE user_id = ? AND watch_id = ?");
+    $dupe->execute([$user_id, $watch_id]);
+
+    if ($dupe->fetch()) {
+        set_flash('error', 'You have already reviewed this watch.');
+        redirect('watch-details.php?id=' . $watch_id);
+    }
+
+    $insert = $pdo->prepare("INSERT INTO reviews (user_id, watch_id, rating, review) VALUES (?, ?, ?, ?)");
+    $insert->execute([$user_id, $watch_id, $rating, $review_text]);
+
+    set_flash('success', 'Review submitted. Thank you!');
+    redirect('watch-details.php?id=' . $watch_id);
+}
+
 // Fetch reviews
 $rstmt = $pdo->prepare("SELECT r.rating, r.review, r.created_at, u.full_name
                          FROM reviews r
@@ -111,6 +146,13 @@ $reviews = $rstmt->fetchAll();
 $avg_rating = 0;
 if (count($reviews) > 0) {
     $avg_rating = round(array_sum(array_column($reviews, 'rating')) / count($reviews), 1);
+}
+
+$user_has_reviewed = false;
+if (is_logged_in()) {
+    $check_review = $pdo->prepare("SELECT id FROM reviews WHERE user_id = ? AND watch_id = ?");
+    $check_review->execute([$_SESSION['user_id'], $watch_id]);
+    $user_has_reviewed = (bool) $check_review->fetch();
 }
 
 $page_title = htmlspecialchars($watch['name']) . ' - ' . SITE_NAME;
@@ -143,6 +185,10 @@ require_once 'includes/navbar.php';
 .review-card { background: var(--color-card); border: 1px solid var(--color-border); border-radius: 12px; padding: 16px 20px; margin-bottom: 12px; }
 .review-meta { font-size: 0.85rem; color: var(--color-text-secondary); margin-bottom: 6px; }
 .no-reviews { color: var(--color-text-secondary); }
+.review-form { background: var(--color-card); border: 1px solid var(--color-border); border-radius: 12px; padding: 20px; margin-top: 20px; }
+.review-form label { display: block; margin-bottom: 6px; font-weight: 600; color: var(--color-text-primary); }
+.review-form select, .review-form textarea { width: 100%; padding: 10px; border: 1px solid var(--color-border); border-radius: 12px; margin-bottom: 14px; font-family: 'Inter', sans-serif; }
+.review-form textarea { min-height: 90px; resize: vertical; }
 @media (max-width: 767px) {
     .details-grid { grid-template-columns: 1fr; }
 }
@@ -223,6 +269,24 @@ require_once 'includes/navbar.php';
                     <div><?php echo nl2br(htmlspecialchars($r['review'])); ?></div>
                 </div>
             <?php endforeach; ?>
+        <?php endif; ?>
+
+        <?php if (is_logged_in() && !$user_has_reviewed): ?>
+            <form class="review-form" method="POST" action="watch-details.php?id=<?php echo $watch_id; ?>">
+                <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
+                <label for="rating">Your Rating</label>
+                <select name="rating" id="rating" required>
+                    <option value="">Select rating</option>
+                    <option value="5">★★★★★ (5)</option>
+                    <option value="4">★★★★☆ (4)</option>
+                    <option value="3">★★★☆☆ (3)</option>
+                    <option value="2">★★☆☆☆ (2)</option>
+                    <option value="1">★☆☆☆☆ (1)</option>
+                </select>
+                <label for="review">Your Review</label>
+                <textarea name="review" id="review" required maxlength="1000"></textarea>
+                <button type="submit" name="submit_review" class="btn-primary">Submit Review</button>
+            </form>
         <?php endif; ?>
     </div>
 </div>
