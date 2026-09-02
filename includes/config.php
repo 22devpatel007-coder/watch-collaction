@@ -10,7 +10,7 @@ define('SITE_TIMEZONE', 'Asia/Kolkata');
 date_default_timezone_set(SITE_TIMEZONE);
 
 // Base URL - update folder name if different in your htdocs/www
-define('BASE_URL', 'http://localhost/watch-collection/');
+define('BASE_URL', 'http://localhost/watch-collaction/');
 
 // Upload paths (relative to project root)
 define('UPLOAD_WATCHES_PATH', 'assets/uploads/watches/');

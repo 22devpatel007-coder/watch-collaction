@@ -3,5 +3,6 @@
 /vendor/
 .DS_Store
 Thumbs.db
+test-layout.php
 
 docs/
