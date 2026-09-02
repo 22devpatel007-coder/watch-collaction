@@ -165,9 +165,7 @@ require_once '../includes/navbar.php';
                     <span>Total</span>
                     <span>₹<?php echo number_format($subtotal, 2); ?></span>
                 </div>
-                <span class="btn-checkout" style="background:#E5E7EB;color:#9CA3AF;cursor:not-allowed;" title="Coming in Module 6">
-                    Proceed To Checkout
-                </span>
+                <a href="<?php echo base_url('user/checkout.php'); ?>" class="btn-checkout">Proceed To Checkout</a>
             </div>
         </div>
     <?php endif; ?>

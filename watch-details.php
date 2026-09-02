@@ -62,7 +62,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
     set_flash('success', 'Added to cart.');
     redirect('watch-details.php?id=' . $watch_id);
 }
+// Handle Buy Now (logged-in users only) — add to cart then go straight to checkout
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['buy_now'])) {
+    if (!is_logged_in()) {
+        redirect('login.php');
+    }
 
+    if (!csrf_verify($_POST['csrf_token'] ?? '')) {
+        set_flash('error', 'Invalid request. Please try again.');
+        redirect('watch-details.php?id=' . $watch_id);
+    }
+
+    $qty = filter_input(INPUT_POST, 'quantity', FILTER_VALIDATE_INT);
+    $qty = ($qty && $qty > 0) ? $qty : 1;
+
+    if ($watch['stock'] < 1) {
+        set_flash('error', 'This watch is out of stock.');
+        redirect('watch-details.php?id=' . $watch_id);
+    }
+
+    $user_id = $_SESSION['user_id'];
+
+    $check = $pdo->prepare("SELECT id, quantity FROM cart WHERE user_id = ? AND watch_id = ?");
+    $check->execute([$user_id, $watch_id]);
+    $existing = $check->fetch();
+
+    if ($existing) {
+        $new_qty = min($existing['quantity'] + $qty, $watch['stock']);
+        $update = $pdo->prepare("UPDATE cart SET quantity = ? WHERE id = ?");
+        $update->execute([$new_qty, $existing['id']]);
+    } else {
+        $qty = min($qty, $watch['stock']);
+        $insert = $pdo->prepare("INSERT INTO cart (user_id, watch_id, quantity) VALUES (?, ?, ?)");
+        $insert->execute([$user_id, $watch_id, $qty]);
+    }
+
+    redirect('user/checkout.php');
+}
 // Fetch reviews
 $rstmt = $pdo->prepare("SELECT r.rating, r.review, r.created_at, u.full_name
                          FROM reviews r
@@ -163,7 +199,7 @@ require_once 'includes/navbar.php';
                         <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
                         <input type="number" name="quantity" value="1" min="1" max="<?php echo (int)$watch['stock']; ?>">
                         <button type="submit" name="add_to_cart" class="btn-primary">Add To Cart</button>
-                        <span class="btn-disabled" title="Checkout coming soon">Buy Now</span>
+                        <button type="submit" name="buy_now" class="btn-primary">Buy Now</button>
                     </form>
                 <?php else: ?>
                     <span class="btn-disabled">Out of Stock</span>
