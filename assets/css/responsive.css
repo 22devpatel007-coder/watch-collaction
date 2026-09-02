@@ -1,0 +1,97 @@
+/* =========================================================
+   Watch Collection - Responsive Styles (mobile-first)
+   Grid: Mobile 1 col / Tablet 2 col / Desktop 4 col
+   ========================================================= */
+
+.product-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+}
+
+@media (min-width: 640px) {
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .product-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* ---------- Navbar (mobile) ---------- */
+
+@media (max-width: 767px) {
+    .navbar__menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+        background-color: #FFFFFF;
+        box-shadow: var(--shadow);
+    }
+
+    .navbar__menu.is-open {
+        display: flex;
+    }
+
+    .navbar__menu a {
+        width: 100%;
+        padding: 14px 20px;
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    .navbar__toggle {
+        display: block;
+    }
+}
+
+@media (min-width: 768px) {
+    .navbar__toggle {
+        display: none;
+    }
+}
+
+/* ---------- Footer ---------- */
+
+@media (max-width: 767px) {
+    .footer__grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    .footer__grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ---------- Admin panel ---------- */
+
+@media (max-width: 767px) {
+    .admin-layout {
+        flex-direction: column;
+    }
+
+    .admin-sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    .admin-stats {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    .admin-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
