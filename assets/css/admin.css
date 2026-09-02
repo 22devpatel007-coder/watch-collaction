@@ -127,3 +127,43 @@
     margin-top: 8px;
     display: block;
 }
+
+.page-title {
+    font-family: var(--font-heading);
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+}
+
+.page-subtitle {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    margin: 28px 0 12px;
+}
+
+.admin-form {
+    background-color: var(--color-card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 24px;
+    margin-bottom: 24px;
+    max-width: 600px;
+}
+
+.admin-form label {
+    margin-top: 14px;
+}
+
+.btn-sm {
+    padding: 6px 14px;
+    font-size: 0.85rem;
+}
+
+.btn-danger {
+    background-color: #DC2626;
+    color: #FFFFFF;
+    border-color: #DC2626;
+}
+
+.btn-danger:hover {
+    background-color: #991B1B;
+}
