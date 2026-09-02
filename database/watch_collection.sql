@@ -154,3 +154,5 @@ CREATE INDEX idx_order_items_order ON order_items(order_id);
 CREATE INDEX idx_payments_order ON payments(order_id);
 CREATE INDEX idx_reviews_watch ON reviews(watch_id);
 -- Note: users(email) and orders(order_number) already indexed via UNIQUE constraints above.
+INSERT INTO admins (full_name, email, password, created_at)
+VALUES ('Admin', 'watch@admin.com', '$2b$10$semgvwMb/r77OokSzp4/3uYop8mnHaIf8dGLYvs0fkiqvU77gYKWC', NOW());

@@ -23,7 +23,16 @@
 
 .admin-topbar__user a {
     color: #FFFFFF;
-    text-decoration: underline;
+    text-decoration: none;
+    background-color: rgba(255,255,255,0.15);
+    padding: 6px 14px;
+    border-radius: var(--radius);
+    margin-left: 8px;
+    transition: background-color 0.3s;
+}
+
+.admin-topbar__user a:hover {
+    background-color: var(--color-accent);
 }
 
 .admin-layout {
