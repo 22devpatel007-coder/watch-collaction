@@ -229,3 +229,21 @@ input:focus, textarea:focus, select:focus {
     font-size: 0.85rem;
     color: #E5E7EB;
 }
+/* ---------- Navbar toggle button reset ---------- */
+
+.navbar__toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    line-height: 1;
+    color: var(--color-primary);
+    cursor: pointer;
+    padding: 4px 8px;
+}
+
+@media (max-width: 767px) {
+    .navbar__toggle {
+        display: block;
+    }
+}
