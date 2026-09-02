@@ -12,6 +12,7 @@
         <a href="<?= base_url('admin/manage-orders.php') ?>">Manage Orders</a>
         <a href="<?= base_url('admin/manage-users.php') ?>">Manage Users</a>
         <a href="<?= base_url('admin/manage-messages.php') ?>">Manage Messages</a>
+        <a href="<?= base_url('admin/reports.php') ?>"> Reports</a>
         <a href="<?= base_url('admin/logout.php') ?>">Logout</a>
     </nav>
 </aside>
