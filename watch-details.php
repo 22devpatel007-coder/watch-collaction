@@ -121,7 +121,7 @@ require_once 'includes/navbar.php';
 <style>
 .details-wrap { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
 .details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-.details-image { background: var(--color-card); border: 1px solid var(--color-border); border-radius: 12px; overflow: hidden; }
+.details-image { background: var(--color-card); border: 1px solid var(--color-border); border-radius: 12px; overflow: hidden; height: 450px;}
 .details-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .details-brand { color: var(--color-accent); font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
 .details-name { font-family: 'DM Serif Display', serif; font-size: 2rem; color: var(--color-text-primary); margin: 8px 0; }

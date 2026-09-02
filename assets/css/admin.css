@@ -109,3 +109,21 @@
     background-color: var(--color-bg);
     font-weight: 600;
 }
+
+.admin-thumb {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #E5E7EB;
+}
+
+.admin-thumb-preview {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #E5E7EB;
+    margin-top: 8px;
+    display: block;
+}

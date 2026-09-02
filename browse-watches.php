@@ -126,8 +126,19 @@ require_once __DIR__ . '/includes/navbar.php';
     }
 
     .product-grid {
-        padding-bottom: 60px;
-    }
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    padding-bottom: 60px;
+}
+
+@media (max-width: 1023px) {
+    .product-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 767px) {
+    .product-grid { grid-template-columns: 1fr; }
+}
 
     .product-card {
         background-color: var(--color-card);
@@ -257,7 +268,7 @@ require_once __DIR__ . '/includes/navbar.php';
                 <div class="product-card">
                     <div class="product-card__image">
                         <?php if (!empty($watch['image'])): ?>
-                            <img src="<?= base_url('uploads/watches/' . htmlspecialchars($watch['image'], ENT_QUOTES, 'UTF-8')) ?>" alt="<?= htmlspecialchars($watch['name'], ENT_QUOTES, 'UTF-8') ?>">
+                            <img src="<?= base_url('/assets/uploads/watches/' . htmlspecialchars($watch['image'], ENT_QUOTES, 'UTF-8')) ?>" alt="<?= htmlspecialchars($watch['name'], ENT_QUOTES, 'UTF-8') ?>">
                         <?php endif; ?>
                     </div>
                     <div class="product-card__body">
