@@ -10,7 +10,11 @@ define('SITE_TIMEZONE', 'Asia/Kolkata');
 date_default_timezone_set(SITE_TIMEZONE);
 
 // Base URL - update folder name if different in your htdocs/www
-define('BASE_URL', 'http://localhost/watch-collaction/');
+$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
+$host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+$script = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME']));
+$base_path = ($script === '/' || $script === '\\') ? '/' : $script . '/';
+define('BASE_URL', $protocol . $host . $base_path);
 
 // Upload paths (relative to project root)
 define('UPLOAD_WATCHES_PATH', 'assets/uploads/watches/');
