@@ -13,7 +13,7 @@ require_once '../includes/functions.php';
 require_once '../includes/admin-auth.php';
 
 if (is_admin()) {
-    redirect('admin/dashboard.php');
+    redirect('dashboard.php');
 } else {
-    redirect('admin/login.php');
+    redirect('login.php');
 }
