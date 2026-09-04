@@ -64,7 +64,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         );
         $stmt->execute([$full_name, $email, $phone, $hash, 'active']);
 
-        set_flash('success', 'Account created successfully. Please login.');
+        $_SESSION['user_id'] = $pdo->lastInsertId();
+        $_SESSION['user_name'] = $full_name;
+        
+        set_flash('success', 'Account created successfully.');
         redirect('user/dashboard.php');
     }
 }
