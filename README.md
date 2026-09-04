@@ -51,6 +51,8 @@ Admin panel:
 ```
 http://localhost/watch-collaction/admin/
 ```
+Email= watch@admin.com
+Password = admin123
 
 ## Deploying to Live Hosting
 
