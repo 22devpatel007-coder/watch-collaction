@@ -1,6 +1,6 @@
 # Watch Collection
 
-A PHP + MySQL e-commerce college project for browsing and ordering watches.
+A PHP + MySQL e-commerce project for browsing and ordering watches.
 
 ## Requirements
 
@@ -52,7 +52,14 @@ Admin panel:
 http://localhost/watch-collaction/admin/
 ```
 
+## Deploying to Live Hosting
+
+`BASE_URL` in `includes/config.php` is auto-detected from the request (protocol + host + script path), so no manual URL editing is needed between localhost and a live domain. Just upload the project files and import the database on your host.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
 ## Notes
 
-- This project is built for academic/college demonstration purposes.
 - Database ships empty — no sample/demo records.
